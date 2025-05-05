@@ -13,11 +13,6 @@
           class="border border-zinc-300 p-3 rounded-lg placeholder:text-zinc-500 text-lg">
       </div>
       <div class="flex flex-col">
-        <label for="txtRank" class="text-xl font-medium">Rank (1 - 10)</label>
-        <input type="number" formControlName="rank" name="txtRank" id="txtRank" min="1" max="10" value="1"
-          class="border border-zinc-300 p-3 rounded-lg text-lg">
-      </div>
-      <div class="flex flex-col">
         <label for="txtTime" class="text-xl font-medium">Horas</label>
         <input type="number" formControlName="time" name="txtTime" id="txtTime" min="1" value="1"
           class="border border-zinc-300 p-3 rounded-lg text-lg">
@@ -46,13 +41,24 @@
     </div>
 
     <div #targetElement class="w-full flex flex-col justify-center items-center gap-5 bg-white p-4 rounded-lg border border-zinc-200">
-      <h3 class="text-2xl font-bold">Participação em chamadas (Ranking)</h3>
+      <div class="flex flex-col justify-center items-center">
+        <h3 class="text-2xl font-bold">Participação em chamadas (Ranking)</h3>
+        <p class="text-lg italic">Porque sair da call é opcional, mas subir no ranking é obrigação.</p>
+      </div>
       <div class="w-full flex flex-col gap-3 pr-2">
         @for (item of components; track components) {
-          <div class="w-full min-h-[6rem] rounded-lg shadow-md flex justify-between items-center gap-4 p-3 border border-zinc-300">
+          <div class="w-full min-h-[6rem] rounded-lg shadow-md flex justify-between items-center gap-4 p-3">
             <div class="flex gap-4 items-center">
               <h4 class="text-2xl font-bold">{{item.rank}}º</h4>
-              <img [src]="item.image" alt="Imagem do usuário" class="h-20 w-20 object-cover rounded-lg border border-zinc-300">
+              @if (item.rank == 1) {
+                <img [src]="item.image" alt="Imagem do usuário" class="h-20 w-20 object-cover rounded-lg border-4 border-yellow-500">
+              } @else if (item.rank == 2) {
+                <img [src]="item.image" alt="Imagem do usuário" class="h-20 w-20 object-cover rounded-lg border-4 border-zinc-500">
+              } @else if (item.rank == 3) {
+                <img [src]="item.image" alt="Imagem do usuário" class="h-20 w-20 object-cover rounded-lg border-4 border-yellow-800">
+              } @else {
+                <img [src]="item.image" alt="Imagem do usuário" class="h-20 w-20 object-cover rounded-lg border border-zinc-300">
+              }
               <div class="flex flex-col">
                 <h5 class="text-xl font-semibold">{{item.name}}</h5>
                 <div class="flex text-zinc-600 gap-4 text-lg">
@@ -67,11 +73,18 @@
                 </div>
               </div>
             </div>
-            @if (+item.rank === 1) {
+            @if (item.rank == 1) {
+              <h1 class="text-yellow-500 text-lg font-medium">Callstrofóbico Supremo</h1>
+            } @else if (item.rank == 2) {
+              <h1  class="text-zinc-500 text-lg font-medium">Respira por Headset</h1>
+            } @else if (item.rank == 3) {
+              <h1 class="text-yellow-800 text-lg font-medium">Conectou... e Sumiu</h1>
+            }
+            @if (item.rank == 1) {
               <lucide-icon name="Crown" class="text-yellow-500 text-2xl"></lucide-icon>
-            } @else if (+item.rank === 2) {
+            } @else if (item.rank == 2) {
               <lucide-icon name="Crown" class="text-zinc-500 text-2xl"></lucide-icon>
-            } @else if (+item.rank === 3) {
+            } @else if (item.rank == 3) {
               <lucide-icon name="Crown" class="text-yellow-800 text-2xl"></lucide-icon>
             }
           </div>
